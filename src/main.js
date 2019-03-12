@@ -7,7 +7,6 @@ import {JToast} from './components/index'
 
 Vue.config.productionTip = false
 
-Vue.prototype.$toast = JToast
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
