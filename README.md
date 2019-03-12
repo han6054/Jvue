@@ -19,3 +19,16 @@ npm run build
 npm run build --report
 ```
 
+### included
+
+- loading
+- message
+- toast
+- picker
+- alert
+- Dialog
+- idCardSelect
+- MaskLayer
+- Roulette
+
+组件持续更新中...
