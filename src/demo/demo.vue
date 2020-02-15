@@ -7,10 +7,12 @@
     <div @click="messageSinger">message 单按钮 弹框 点击</div>
     <div>选择个人身份证日期 --- <JIDCardSelect v-model="idCard.id" :always="idCard.always"></JIDCardSelect></div>
     <div>单选组件 ---  <JPicker :title="select.title" :dataSource="select.data" v-model="fromSelect.id"></JPicker></div>
+    <div>下拉选择 ---  </div>
+    <div><JSelect :options="selectOptions" v-model="value1"></JSelect></div>
     <div>轮盘</div>
     <roulette
       :prize="roulette.prize"
-      :is-allow="roulette.isLock"
+      :is-allow.sync="roulette.isLock"
       :beforeHandle="_beforeHandle"
       :afterHandle="_afterHandle"
       :angles="roulette.angles">
@@ -33,9 +35,21 @@
         fromSelect: {
           id: ''
         },
+        selectOptions: {
+          title: '产品线',
+          data: [{
+            name: '中国银行线上',
+            code: '1'
+          },
+            {
+              name: '招商银行线上',
+              code: '2'
+            }],
+        },
+        value1: '',
         // 轮盘
         roulette: {
-          prize: 0,
+          prize: null,
           isLock: false,
           angles:[0, 60, 120, 180, 240, 300],
         }
@@ -43,12 +57,16 @@
     },
     methods: {
       _beforeHandle(resolve, reject) {
-        this.roulette.isLock = true
         // ajax 获取奖品
         setTimeout(() => {
-          this.roulette.prize = 3
-          resolve()
-        },500)
+          this.roulette.prize = 2;
+          this.roulette.isLock = true;
+          resolve();
+        },500);
+        // 增加抽奖机会
+        setTimeout(() =>{
+          this.roulette.isLock = false;
+        },3000)
       },
       _afterHandle() {
         // callback

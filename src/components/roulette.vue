@@ -16,6 +16,7 @@
       },
       prize: {
         type: [Number, String],
+        default: null,
         require: true
       },
       isAllow: {
@@ -37,22 +38,21 @@
     data() {
       return {
         rotate_angle: 0, //将要旋转的角度
-        rotate_transition: "all 6s ease-in-out", //初始化选中的过度属性控制
-        start_rotating_deg: this.CurrentDeg, //初始旋转角度
+        rotate_transition: "all 6s ease-in-out", // 初始化选中的过度属性控制
+        start_rotating_deg: this.CurrentDeg, // 初始旋转角度
         previous: 0, // 上次点击的时间
-        isLock: this.isAllow,
         curAngles: this.angles
       }
     },
     methods: {
       rotate_handle() {
-        if(!this.isLock) {
+        if(!this.isAllow) {
           let promise = () => {
             return new Promise((resolve, reject) => {
-              this.beforeHandle(resolve, reject)
-              this.isLock = true
+              console.log(2);
+              this.beforeHandle(resolve, reject);
             })
-          }
+          };
           let start = async () => {
             try {
               await promise();
@@ -60,16 +60,16 @@
             } catch (e) {
               e();
             }
-          }
-          start()
+          };
+          start();
+          start = null;
         }
       },
       rotating() {
-        console.log(this.prize)
         const result_index = this.prize ; // 转到哪一块对应获得奖品
         const result_angle = this.curAngles; // 轮盘上奖品角度
         const rand_circle = 4; // 初始化转盘圈数
-        const rotate_angle = this.start_rotating_deg + rand_circle * 360 + result_angle[result_index] - this.start_rotating_deg % 360;
+        const rotate_angle = result_index && this.start_rotating_deg + rand_circle * 360 + result_angle[result_index] - this.start_rotating_deg % 360;
         this.start_rotating_deg = rotate_angle;
         this.rotate_angle = "rotate(" + rotate_angle + "deg)";
         setTimeout(() => {
@@ -77,9 +77,9 @@
         }, 6000)
       },
       throttle(func, wait) {
-        let now = Date.now()
+        let now = Date.now();
         if(now - this.previous > wait) {
-          func.apply(this, arguments)
+          func.apply(this, arguments);
           this.previous = now
         }
       }

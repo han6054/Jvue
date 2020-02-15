@@ -6,6 +6,7 @@ import JMessage from './message/index'
 import JIDCardSelect from './idCardSelect'
 import JPicker from './picker'
 import JRoulette from './roulette'
+import JSelect from './select/select'
 
 const components = [
    JToast,
@@ -14,12 +15,13 @@ const components = [
   JMessage,
   JIDCardSelect,
   JPicker,
-  JRoulette
-]
+  JRoulette,
+  JSelect
+];
 
-components.map(component => Vue.component(component.name, component))
+components.map(component => Vue.component(component.name, component));
 
-Vue.prototype.$toast = JToast
-Vue.prototype.$loading = JLoading
-Vue.prototype.$message = JMessage
+Vue.prototype.$toast = JToast;
+Vue.prototype.$loading = JLoading;
+Vue.prototype.$message = JMessage;
 
